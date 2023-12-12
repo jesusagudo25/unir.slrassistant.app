@@ -1,9 +1,9 @@
 import { lazy } from 'react';
 import AuthGuard from './auth/AuthGuard';
-import { authRoles } from './auth/authRoles';
 import Loadable from './components/Loadable';
 import MatxLayout from './components/MatxLayout/MatxLayout';
-import materialRoutes from 'app/views/material-kit/MaterialRoutes';
+import MatxLayout2 from './components/MatxLayout/MatxLayout2';
+
 
 // session pages
 const NotFound = Loadable(lazy(() => import('app/views/sessions/NotFound')));
@@ -11,14 +11,15 @@ const JwtLogin = Loadable(lazy(() => import('app/views/sessions/JwtLogin')));
 const JwtRegister = Loadable(lazy(() => import('app/views/sessions/JwtRegister')));
 const ForgotPassword = Loadable(lazy(() => import('app/views/sessions/ForgotPassword')));
 
-// echart page
-const AppEchart = Loadable(lazy(() => import('app/views/charts/echarts/AppEchart')));
-
 // dashboard page
 const Analytics = Loadable(lazy(() => import('app/views/dashboard/Analytics')));
 
 // landing page
 const LandingPage = Loadable(lazy(() => import('landing-page/LandingApp')));
+
+// project pages
+const NewProjectPage = Loadable(lazy(() => import('app/views/projects/NewProjectPage')));
+const ProjectDetails = Loadable(lazy(() => import('app/views/projects/ProjectDetails')));
 
 const routes = [
   {
@@ -28,19 +29,31 @@ const routes = [
       </AuthGuard>
     ),
     children: [
-      ...materialRoutes,
       // dashboard route
       {
         path: '/dashboard/app',
         element: <Analytics />,
-        auth: authRoles.admin
       },
 
-      // e-chart rooute
+      // project routes
       {
-        path: '/charts/echarts',
-        element: <AppEchart />,
-        auth: authRoles.editor
+        path: '/projects/new',
+        element: <NewProjectPage />,
+      }      
+    ]
+  },
+
+  // project pages route
+  {
+    element: (
+      <AuthGuard>
+        <MatxLayout2 />
+      </AuthGuard>
+    ),
+    children: [
+      {
+        path: '/projects/:id',
+        element: <ProjectDetails />,
       }
     ]
   },

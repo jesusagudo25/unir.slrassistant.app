@@ -40,7 +40,7 @@ const NavListBox = styled(Box)({
   flexDirection: 'column'
 });
 
-const Layout1Sidenav = () => {
+const SideNavHome = () => {
   const theme = useTheme();
   const { settings, updateSettings } = useSettings();
   const leftSidebar = settings.layout1Settings.leftSidebar;
@@ -85,4 +85,4 @@ const Layout1Sidenav = () => {
   );
 };
 
-export default memo(Layout1Sidenav);
+export default memo(SideNavHome);

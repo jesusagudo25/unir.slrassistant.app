@@ -1,3 +1,7 @@
 import { lazy } from 'react';
 
-export const MatxLayouts = { layout1: lazy(() => import('./Layout1/Layout1')) };
+export const MatxLayouts = { 
+    layout1: lazy(() => import('./Layout1/Layout1')),
+    layout2: lazy(() => import('./Layout1/Layout2')),
+
+};

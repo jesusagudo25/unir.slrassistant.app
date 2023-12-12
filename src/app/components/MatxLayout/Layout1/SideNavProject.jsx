@@ -5,7 +5,7 @@ import useSettings from 'app/hooks/useSettings';
 import { convertHexToRGB } from 'app/utils/utils';
 import { sidenavCompactWidth, sideNavWidth } from 'app/utils/constant';
 import Brand from '../../Brand';
-import Sidenav from '../../Sidenav';
+import SidenavProject from '../../SidenavProject';
 
 const SidebarNavRoot = styled(Box)(({ theme, width, bg, image }) => ({
   position: 'fixed',
@@ -40,7 +40,7 @@ const NavListBox = styled(Box)({
   flexDirection: 'column'
 });
 
-const Layout1Sidenav = () => {
+const SideNavProject = () => {
   const theme = useTheme();
   const { settings, updateSettings } = useSettings();
   const leftSidebar = settings.layout1Settings.leftSidebar;
@@ -79,10 +79,10 @@ const Layout1Sidenav = () => {
             />
           </Hidden>
         </Brand>
-        <Sidenav />
+        <SidenavProject />
       </NavListBox>
     </SidebarNavRoot>
   );
 };
 
-export default memo(Layout1Sidenav);
+export default memo(SideNavProject);
