@@ -17,7 +17,7 @@ import {
     Stack,
     styled,
 } from "@mui/material";
-import { Span } from "app/components/Typography";
+import { Span } from "app/theme/Typography";
 import { useEffect, useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 
@@ -60,6 +60,8 @@ const NewProjectForm = () => {
         keywords,
         visibility
     } = state;
+
+
     return (
         <div>
             <ValidatorForm onSubmit={handleSubmit} onError={() => null}>
@@ -91,16 +93,6 @@ const NewProjectForm = () => {
                                 <MenuItem value={30}>Thirty</MenuItem>
                             </Select>
                         </FormControl>
-
-                        <TextField
-                            type="text"
-                            name="keywords"
-                            label="Keywords"
-                            value={keywords || ""}
-                            onChange={handleChange}
-                            validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
-                            errorMessages={["this field is required"]}
-                        />
 
                         <TextField
                             type="text"
@@ -172,7 +164,7 @@ const NewProjectForm = () => {
 
                 <Button color="primary" variant="contained" type="submit">
                     <Icon>send</Icon>
-                    <Span sx={{ pl: 1, textTransform: "capitalize" }}>Submit</Span>
+                    <Span sx={{ pl: 1, textTransform: "capitalize" }}>Create</Span>
                 </Button>
             </ValidatorForm>
         </div>

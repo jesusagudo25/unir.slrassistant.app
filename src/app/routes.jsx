@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 import AuthGuard from './auth/AuthGuard';
-import Loadable from './components/Loadable';
-import MatxLayout from './components/MatxLayout/MatxLayout';
-import MatxLayout2 from './components/MatxLayout/MatxLayout2';
+import Loadable from './theme/Loadable';
+import MatxLayout from './theme/MatxLayout/MatxLayout';
+import MatxLayout2 from './theme/MatxLayout/MatxLayout2';
 
 
 // session pages
@@ -20,6 +20,11 @@ const LandingPage = Loadable(lazy(() => import('landing-page/LandingApp')));
 // project pages
 const NewProjectPage = Loadable(lazy(() => import('app/views/projects/NewProjectPage')));
 const ProjectDetails = Loadable(lazy(() => import('app/views/projects/ProjectDetails')));
+
+//steps
+const General = Loadable(lazy(() => import('app/views/steps/General')));
+const ReviewProtocol = Loadable(lazy(() => import('app/views/steps/ReviewProtocol')));
+const Timeline = Loadable(lazy(() => import('app/views/steps/Timeline')));
 
 const routes = [
   {
@@ -54,6 +59,62 @@ const routes = [
       {
         path: '/projects/:id',
         element: <ProjectDetails />,
+      },
+      {
+        path: '/projects/:id/general',
+        element: <General />,
+      },
+      {
+        path: '/projects/:id/review-protocol',
+        element: <ReviewProtocol />,
+      },
+      {
+        path: '/projects/:id/timeline',
+        element: <Timeline />,
+      },
+      {
+        path: '/projects/:id/search',
+        element: <>Demo</>
+      },
+      {
+        path: '/projects/:id/selection',
+        element: <>Demo</>
+      },
+      {
+        path: '/projects/:id/data-extraction',
+        element: <>Demo</>
+      },
+      {
+        path: '/projects/:id/quality-assessment',
+        element: <>Demo</>
+      },
+      {
+        path: '/projects/:id/data-analysis',
+        element: <>Demo</>
+      },
+      {
+        path: '/projects/:id/results',
+        element: <>Demo</>
+      },
+      {
+        path: '/projects/:id/visualization',
+        element: <>Demo</>
+      },
+      {
+        path: '/projects/:id/export',
+        element: <>Demo</>
+      },
+      {
+        path: '/projects/:id/chat',
+        element: <>Demo</>
+      },
+      {
+        path: '/projects/:id/files',
+        element: <>Demo</>
+      },
+      {
+        path: '/projects/:id/kanban',
+        element: <>Demo</>
       }
     ]
   },

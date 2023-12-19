@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Hidden, Switch, Box, styled, useTheme } from '@mui/material';
-import { themeShadows } from 'app/components/MatxTheme/themeColors';
+import { themeShadows } from 'app/theme/MatxTheme/themeColors';
 import useSettings from 'app/hooks/useSettings';
 import { convertHexToRGB } from 'app/utils/utils';
 import { sidenavCompactWidth, sideNavWidth } from 'app/utils/constant';

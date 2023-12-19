@@ -13,8 +13,8 @@ import {
   Button
 } from '@mui/material';
 
-import { MatxMenu, MatxSearchBox } from 'app/components';
-import { themeShadows } from 'app/components/MatxTheme/themeColors';
+import { MatxMenu, MatxSearchBox } from 'app/theme';
+import { themeShadows } from 'app/theme/MatxTheme/themeColors';
 import useAuth from 'app/hooks/useAuth';
 import useSettings from 'app/hooks/useSettings';
 import { topBarHeight } from 'app/utils/constant';

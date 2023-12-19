@@ -1,41 +1,40 @@
 
 /* Systematic literature review - Tool for researchers */
-export const navigationsProject = [
-  { name: '#Name Project', icon: 'book', path: '/projects/new' },
-  { label: 'Steps', type: 'label' },
-  {
-    name: 'Planning',
-    icon: 'playlist_add_check',
-    children: [
-      { name: 'General', path: '/projects/new/planning' },
-      { name: 'Review protocol', path: '/projects/new/planning' },
-      { name: 'Quality criteria', path: '/projects/new/planning' },
-      { name: 'Timeline', path: '/projects/new/planning' },
-    ]
-  },
-  {
-    name: 'Conducting',
-    icon: 'assignment',
-    children: [
-      { name: 'Search', path: '/projects/new/conducting' },
-      { name: 'Selection', path: '/projects/new/conducting' },
-      { name: 'Data extraction', path: '/projects/new/conducting' },
-      { name: 'Quality assessment', path: '/projects/new/conducting' },
-      { name: 'Data analysis', path: '/projects/new/conducting' },
-    ]
-  },
-  {
-    name: 'Presentation',
-    icon: 'assignment_turned_in',
-    children: [
-      { name: 'Results', path: '/projects/new/presentation' },
-      { name: 'Visualization', path: '/projects/new/presentation' },
-      { name: 'Export', path: '/projects/new/presentation' },
-    ]
-  },
-  { label: 'Communication', type: 'label' },
-  { name: 'Chat', icon: 'chat', path: '/projects/new/chat' },
-  { name: 'Files', icon: 'folder', path: '/projects/new/files' },
-  { name: 'Kanban', icon: 'view_column', path: '/projects/new/kanban' },
-  
-];
+export const navigationsProject = (id) => {
+  return [
+    { name: `#Name Project`, icon: `book`, path: `/projects/${id}` },
+    {
+      name: `Planning`,
+      icon: `playlist_add_check`,
+      children: [
+        { name: `General`, path: `/projects/${id}/general` },
+        { name: `Review protocol`, path: `/projects/${id}/review-protocol` },
+        { name: `Timeline`, path: `/projects/${id}/timeline` },
+      ]
+    },
+    {
+      name: `Conducting`,
+      icon: `assignment`,
+      children: [
+        { name: `Search`, path: `/projects/${id}/search` },
+        { name: `Selection`, path: `/projects/${id}/selection` },
+        { name: `Data extraction`, path: `/projects/${id}/data-extraction` },
+        { name: `Quality assessment`, path: `/projects/${id}/quality-assessment` },
+        { name: `Data analysis`, path: `/projects/${id}/data-analysis` },
+      ]
+    },
+    {
+      name: `Presentation`,
+      icon: `assignment_turned_in`,
+      children: [
+        { name: `Results`, path: `/projects/${id}/results` },
+        { name: `Visualization`, path: `/projects/${id}/visualization` },
+        { name: `Export`, path: `/projects/${id}/export` },
+      ]
+    },
+    { label: `Communication`, type: `label` },
+    { name: `Chat`, icon: `chat`, path: `/projects/${id}/chat` },
+    { name: `Files`, icon: `folder`, path: `/projects/${id}/files` },
+    { name: `Kanban`, icon: `view_column`, path: `/projects/${id}/kanban` },
+  ];
+}

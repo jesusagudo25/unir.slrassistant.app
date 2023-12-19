@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 import { Box, styled } from '@mui/material';
-import { Breadcrumb, SimpleCard } from 'app/components';
+import { Breadcrumb, SimpleCard } from 'app/theme';
 import NewProjectForm from 'app/components/ProjectForm/NewProjectForm';
 
 const Container = styled('div')(({ theme }) => ({
@@ -13,21 +13,21 @@ const Container = styled('div')(({ theme }) => ({
 }));
 
 const NewProjectPage = () => {
-   
-    return (
-        <Container>
-        <Box className="breadcrumb">
-          <Breadcrumb routeSegments={[{ name: 'Projects', path: '/projects' }, { name: 'New Project' }]} />
-        </Box>
-  
-        <Stack spacing={3}>
-          <SimpleCard title="Create New Project">
-            <NewProjectForm />
-          </SimpleCard>
-  
-        </Stack>
-      </Container>
-    )
+
+  return (
+    <Container>
+      <Box className="breadcrumb">
+        <Breadcrumb routeSegments={[{ name: 'Projects', path: '/projects' }, { name: 'New Project' }]} />
+      </Box>
+
+      <Stack spacing={3}>
+        <SimpleCard title="Create New Project">
+          <NewProjectForm />
+        </SimpleCard>
+
+      </Stack>
+    </Container>
+  )
 }
 
 export default NewProjectPage

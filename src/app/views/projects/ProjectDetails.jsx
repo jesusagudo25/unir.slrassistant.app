@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Grid, Icon, IconButton, Stack } from '@mui/material';
 import { Box, styled } from '@mui/material';
-import { Breadcrumb, SimpleCard } from 'app/components';
+import { Breadcrumb, SimpleCard } from 'app/theme';
 import StatProjectCards from '../dashboard/shared/StatProjectCards';
 import TopSellingTable from '../dashboard/shared/TopSellingTable';
 

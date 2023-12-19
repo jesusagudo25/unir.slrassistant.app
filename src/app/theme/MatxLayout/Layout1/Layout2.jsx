@@ -2,12 +2,12 @@ import { useEffect, useRef, memo } from 'react';
 import { ThemeProvider, useMediaQuery, Box, styled, useTheme } from '@mui/material';
 import Scrollbar from 'react-perfect-scrollbar';
 import { Outlet } from 'react-router-dom';
-import { MatxSuspense } from 'app/components';
+import { MatxSuspense } from 'app/theme';
 import useSettings from 'app/hooks/useSettings';
 import { sidenavCompactWidth, sideNavWidth } from 'app/utils/constant';
 import Footer from '../../Footer';
 import SidenavTheme from '../../MatxTheme/SidenavTheme/SidenavTheme';
-import SideNavHome from './SideNavHome';
+import SideNavProject from './SideNavProject';
 import Layout1Topbar from './Layout1Topbar';
 
 const Layout1Root = styled(Box)(({ theme }) => ({
@@ -45,7 +45,7 @@ const LayoutContainer = styled(Box)(({ width, open }) => ({
   marginRight: open ? 50 : 0
 }));
 
-const Layout1 = () => {
+const Layout2 = () => {
   const { settings, updateSettings } = useSettings();
   const { layout1Settings, secondarySidebar } = settings;
   const topbarTheme = settings.themes[layout1Settings.topbar.theme];
@@ -87,7 +87,7 @@ const Layout1 = () => {
     <Layout1Root className={layoutClasses}>
       {showSidenav && sidenavMode !== 'close' && (
         <SidenavTheme>
-          <SideNavHome />
+          <SideNavProject />
         </SidenavTheme>
       )}
 
@@ -129,15 +129,13 @@ const Layout1 = () => {
               </MatxSuspense>
             </Box>
 
-            {settings.footer.show && !settings.footer.fixed && <Footer />}
           </ContentBox>
         )}
 
-        {settings.footer.show && settings.footer.fixed && <Footer />}
       </LayoutContainer>
 
     </Layout1Root>
   );
 };
 
-export default memo(Layout1);
+export default memo(Layout2);

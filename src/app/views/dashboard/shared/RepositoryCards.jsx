@@ -1,5 +1,5 @@
 import { Box, Card, Grid, Icon, IconButton, styled, Tooltip, Typography } from '@mui/material';
-import { Small } from 'app/components/Typography';
+import { Small } from 'app/theme/Typography';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',

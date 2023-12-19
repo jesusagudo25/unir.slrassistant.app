@@ -1,8 +1,9 @@
 import { Fragment } from 'react';
 import Scrollbar from 'react-perfect-scrollbar';
 import { styled } from '@mui/material';
-import { MatxVerticalNav } from 'app/components';
+import { MatxVerticalNav } from 'app/theme';
 import useSettings from 'app/hooks/useSettings';
+import { useParams } from 'react-router-dom';
 import { navigationsProject } from 'app/navigationsProject';
 
 const StyledScrollBar = styled(Scrollbar)(() => ({
@@ -26,6 +27,12 @@ const SideNavMobile = styled('div')(({ theme }) => ({
 const SidenavProject = ({ children }) => {
   const { settings, updateSettings } = useSettings();
 
+  const { id } = useParams();
+  const navigationsProjectDisplay = navigationsProject(id);
+
+  //replace :id with current project id
+  
+
   const updateSidebarMode = (sidebarSettings) => {
     let activeLayoutSettingsName = settings.activeLayout + 'Settings';
     let activeLayoutSettings = settings[activeLayoutSettingsName];
@@ -46,7 +53,7 @@ const SidenavProject = ({ children }) => {
     <Fragment>
       <StyledScrollBar options={{ suppressScrollX: true }}>
         {children}
-        <MatxVerticalNav items={navigationsProject} />
+        <MatxVerticalNav items={navigationsProjectDisplay} />
       </StyledScrollBar>
 
       <SideNavMobile onClick={() => updateSidebarMode({ mode: 'close' })} />
