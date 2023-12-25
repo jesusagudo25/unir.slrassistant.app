@@ -7,6 +7,7 @@ import { Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import SearchMethods from 'app/components/steps/general/SearchMethods';
 import Source from 'app/components/steps/general/Source';
+import SelectionCriteria from 'app/components/steps/general/SelectionCriteria';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -82,7 +83,7 @@ export default function ReviewProtocol() {
                 <Source />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-                Example
+                <SelectionCriteria />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
                 Example

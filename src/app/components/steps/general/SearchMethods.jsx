@@ -216,7 +216,7 @@ export default function SearchMethods() {
 
                 <Grid container spacing={6}>
                     <Grid item lg={12} md={12} sm={12} xs={12} sx={{ mt: 2 }}>
-                        <ListItems items={["Method 1", "Method 2", "Method 3"]} />
+                        <ListItems items={["Terms 1", "Terms 2", "Terms 3", "Terms 4", "Terms 5", "Terms 6", "Terms 7", "Terms 8", "Terms 9", "Terms 10"]} />
                     </Grid>
                 </Grid>
 
