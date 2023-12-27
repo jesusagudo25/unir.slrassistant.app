@@ -7,9 +7,9 @@ import {
 
     styled,
 } from "@mui/material";
-import { H5, Span } from 'app/theme/Typography';
+import { H5,  Span } from 'app/theme/Typography';
 import { useEffect, useState } from "react";
-import { SelectValidator, TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import ListItems from "./ListItem";
 
 const TextField = styled(TextValidator)(() => ({
@@ -17,8 +17,9 @@ const TextField = styled(TextValidator)(() => ({
     marginBottom: "16px",
 }));
 
+function SelectionProcedures() {
 
-export default function Source() {
+
     const [state, setState] = useState({});
 
     useEffect(() => {
@@ -43,39 +44,30 @@ export default function Source() {
     const {
         name,
     } = state;
+
     return (
         <div>
             <ValidatorForm onSubmit={handleSubmit} onError={() => null}>
-                <H5 >Source of Data</H5>
+                <H5 >Describe the selection procedures</H5>
                 <Grid container spacing={6}>
                     <Grid item lg={10} md={12} sm={12} xs={12} sx={{ mt: 2 }}>
-                        <SelectValidator
-                            select
-                            fullWidth
-                            label="Please select a source"
-                            name="source"
+                        <TextField
+                            type="text"
+                            name="description"
+                            id="standard-basic"
+                            value={name || ""}
+                            onChange={handleChange}
                             errorMessages={["this field is required"]}
-                            sx={{ mb: 2 }}
-                            size="small"
-                        >
-                            <option value="a">Google Scholar</option>
-                            <option value="b">IEEE Xplore</option>
-                            <option value="c">Science Direct</option>
-                            <option value="d">Springer</option>
-                        </SelectValidator>
+                            label="Please describe the selection procedures"
+                            multiline
+                            rows={7}
+                        />
                     </Grid>
                     <Grid item lg={2} md={2} sm={2} xs={2} sx={{ mt: 2 }} alignItems="flex-end">
                         <Button color="primary" variant="contained" type="submit" size="large" >
-                            <Icon>add</Icon>
-                            <Span sx={{ pl: 1, textTransform: "capitalize" }}>Add</Span>
+                            <Icon>save</Icon>
+                            <Span sx={{ pl: 1, textTransform: "capitalize" }}>save</Span>
                         </Button>
-                    </Grid>
-                </Grid>
-                <Divider sx={{ mb: 2 }} />
-
-                <Grid container spacing={6}>
-                    <Grid item lg={12} md={12} sm={12} xs={12} sx={{ mt: 2 }}>
-                        <ListItems items={["Source 1", "Source 2", "Source 3"]} />
                     </Grid>
                 </Grid>
 
@@ -83,3 +75,5 @@ export default function Source() {
         </div>
     )
 }
+
+export default SelectionProcedures

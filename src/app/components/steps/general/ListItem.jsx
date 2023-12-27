@@ -16,17 +16,22 @@ const ContentRoot = styled('div')(({ theme }) => ({
 const ListItem = ({ items }) => {
   return (
     <ContentRoot>
-        {items.map((item, index) => (
-        <Alert variant="filled" key={index} sx={{ mb: 2, backgroundColor: '#1976d226', color: '#34314c8a', fontWeight: 'bold'
-         }} icon={<Icon className="icon">rounded_corner</Icon>} action={
+      {items.map((item, index) => (
+        <Alert variant="filled" key={index}
+          sx={{
+            mb: 2, backgroundColor: '#1976d226', color: '#34314c8a', fontWeight: 'bold'
+          }}
+          icon={<Icon className="icon">rounded_corner</Icon>} action={
+
             <Button color="inherit" size="small">
-                <Icon>close</Icon>
+              <Icon>close</Icon>
             </Button>
-        }>
-            {item}
+
+          }>
+          {item}
         </Alert>
-        ))
-        }
+      ))
+      }
     </ContentRoot>
   )
 }

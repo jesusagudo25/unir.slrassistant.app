@@ -3,6 +3,7 @@ import AuthGuard from './auth/AuthGuard';
 import Loadable from './theme/Loadable';
 import MatxLayout from './theme/MatxLayout/MatxLayout';
 import MatxLayout2 from './theme/MatxLayout/MatxLayout2';
+import QualityAssessment from './views/steps/QualityAssessment';
 
 
 // session pages
@@ -25,6 +26,8 @@ const ProjectDetails = Loadable(lazy(() => import('app/views/projects/ProjectDet
 const General = Loadable(lazy(() => import('app/views/steps/General')));
 const ReviewProtocol = Loadable(lazy(() => import('app/views/steps/ReviewProtocol')));
 const Timeline = Loadable(lazy(() => import('app/views/steps/Timeline')));
+const Search = Loadable(lazy(() => import('app/views/steps/Search')));
+const Selection = Loadable(lazy(() => import('app/views/steps/Selection')));
 
 const routes = [
   {
@@ -74,22 +77,18 @@ const routes = [
       },
       {
         path: '/projects/:id/search',
-        element: <>Demo</>
+        element: <Search />,
       },
       {
         path: '/projects/:id/selection',
-        element: <>Demo</>
-      },
-      {
-        path: '/projects/:id/data-extraction',
-        element: <>Demo</>
+        element: <Selection />,
       },
       {
         path: '/projects/:id/quality-assessment',
-        element: <>Demo</>
+        element: <QualityAssessment />,
       },
       {
-        path: '/projects/:id/data-analysis',
+        path: '/projects/:id/data-extraction',
         element: <>Demo</>
       },
       {
@@ -98,10 +97,6 @@ const routes = [
       },
       {
         path: '/projects/:id/visualization',
-        element: <>Demo</>
-      },
-      {
-        path: '/projects/:id/export',
         element: <>Demo</>
       },
       {

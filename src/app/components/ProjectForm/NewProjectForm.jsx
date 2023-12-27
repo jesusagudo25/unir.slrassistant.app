@@ -96,6 +96,17 @@ const NewProjectForm = () => {
 
                         <TextField
                             type="text"
+                            name="keywords"
+                            label="Keywords"
+                            value={keywords || ""}
+                            onChange={handleChange}
+                            validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
+                            errorMessages={["this field is required"]}
+                            multiline
+                        />
+
+                        <TextField
+                            type="text"
                             name="description"
                             label="Description"
                             value={description || ""}

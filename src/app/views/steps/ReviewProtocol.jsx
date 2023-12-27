@@ -8,6 +8,8 @@ import { useState } from 'react';
 import SearchMethods from 'app/components/steps/general/SearchMethods';
 import Source from 'app/components/steps/general/Source';
 import SelectionCriteria from 'app/components/steps/general/SelectionCriteria';
+import SelectionProcedures from 'app/components/steps/general/SelectionProcedures';
+import QualityCriteria from 'app/components/steps/general/QualityCriteria';
 
 const Container = styled('div')(({ theme }) => ({
     margin: '30px',
@@ -86,11 +88,11 @@ export default function ReviewProtocol() {
                 <SelectionCriteria />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
-                Example
+                <SelectionProcedures />
             </CustomTabPanel>
 
             <CustomTabPanel value={value} index={4}>
-                Example
+                <QualityCriteria />
             </CustomTabPanel>
         </Box>
 

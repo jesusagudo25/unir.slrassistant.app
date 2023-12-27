@@ -18,9 +18,8 @@ export const navigationsProject = (id) => {
       children: [
         { name: `Search`, path: `/projects/${id}/search` },
         { name: `Selection`, path: `/projects/${id}/selection` },
-        { name: `Data extraction`, path: `/projects/${id}/data-extraction` },
         { name: `Quality assessment`, path: `/projects/${id}/quality-assessment` },
-        { name: `Data analysis`, path: `/projects/${id}/data-analysis` },
+        { name: `Data extraction`, path: `/projects/${id}/data-extraction` },
       ]
     },
     {
@@ -28,8 +27,6 @@ export const navigationsProject = (id) => {
       icon: `assignment_turned_in`,
       children: [
         { name: `Results`, path: `/projects/${id}/results` },
-        { name: `Visualization`, path: `/projects/${id}/visualization` },
-        { name: `Export`, path: `/projects/${id}/export` },
       ]
     },
     { label: `Communication`, type: `label` },

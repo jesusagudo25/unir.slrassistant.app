@@ -36,7 +36,7 @@ export default function Timeline() {
     return (
         <Container>
             <Box className="breadcrumb">
-                <Breadcrumb routeSegments={[{ name: 'Projects', path: '/projects' }, { name: 'General' }]} />
+                <Breadcrumb routeSegments={[{ name: 'Projects', path: '/projects' }, { name: 'Timeline' }]} />
             </Box>
 
             <Stack spacing={3}>

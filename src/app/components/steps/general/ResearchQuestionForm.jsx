@@ -59,6 +59,7 @@ const ResearchQuestionForm = () => {
                           errorMessages={["this field is required"]}
                           label="Please enter a question"
                           validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
+                          size="small"
                       />
                   </Grid>
                   <Grid item lg={2} md={2} sm={2} xs={2} sx={{ mt: 2 }} alignItems="flex-end"> 

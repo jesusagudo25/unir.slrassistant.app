@@ -48,7 +48,7 @@ export default function SelectionCriteria() {
             <ValidatorForm onSubmit={handleSubmit} onError={() => null} >
                 <H5 >Criterion</H5>
 
-                    <Stack direction="row" sx={{ gap:3, alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                    <Stack direction="row" sx={{ gap:3, alignItems: 'center', justifyContent: 'space-between', my: 2 }}>
                         <FormControl sx={{ width: '70%' }}> 
                             <TextField
                                 type="text"
