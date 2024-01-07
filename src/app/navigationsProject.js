@@ -1,8 +1,9 @@
 
 /* Systematic literature review - Tool for researchers */
-export const navigationsProject = (id) => {
+export const navigationsProject = (id,name) => {
+  console.log("navigationsProject",id,name);
   return [
-    { name: `#Name Project`, icon: `book`, path: `/projects/${id}` },
+    { name: name, icon: `book`, path: `/projects/${id}` },
     {
       name: `Planning`,
       icon: `playlist_add_check`,
@@ -20,18 +21,19 @@ export const navigationsProject = (id) => {
         { name: `Selection`, path: `/projects/${id}/selection` },
         { name: `Quality assessment`, path: `/projects/${id}/quality-assessment` },
         { name: `Data extraction`, path: `/projects/${id}/data-extraction` },
+        { name: `Synthesis`, path: `/projects/${id}/data-synthesis` },
       ]
     },
     {
       name: `Presentation`,
       icon: `assignment_turned_in`,
       children: [
-        { name: `Results`, path: `/projects/${id}/results` },
+        { name: `Report`, path: `/projects/${id}/report` },
       ]
     },
     { label: `Communication`, type: `label` },
     { name: `Chat`, icon: `chat`, path: `/projects/${id}/chat` },
     { name: `Files`, icon: `folder`, path: `/projects/${id}/files` },
-    { name: `Kanban`, icon: `view_column`, path: `/projects/${id}/kanban` },
+    { name: `Tasks`, icon: `view_column`, path: `/projects/${id}/tasks` },
   ];
 }

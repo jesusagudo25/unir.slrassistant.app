@@ -1,9 +1,12 @@
 import { Fragment } from 'react';
 import Scrollbar from 'react-perfect-scrollbar';
+import { useState } from 'react';
 import { styled } from '@mui/material';
 import { MatxVerticalNav } from 'app/theme';
 import useSettings from 'app/hooks/useSettings';
-import { navigations } from 'app/navigations';
+
+import { useEffect } from 'react';
+import axios from 'axios';
 
 const StyledScrollBar = styled(Scrollbar)(() => ({
   paddingLeft: '1rem',
@@ -25,6 +28,11 @@ const SideNavMobile = styled('div')(({ theme }) => ({
 
 const Sidenav = ({ children }) => {
   const { settings, updateSettings } = useSettings();
+  const { REACT_APP_CLOUD_GATEWAY, REACT_APP_MICRO_REVIEW } = process.env;
+  const [navigations, setNavigations] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const id = localStorage.getItem('id');
 
   const updateSidebarMode = (sidebarSettings) => {
     let activeLayoutSettingsName = settings.activeLayout + 'Settings';
@@ -41,6 +49,50 @@ const Sidenav = ({ children }) => {
       }
     });
   };
+
+  useEffect(() => {
+    setLoading(true);
+      axios.get(`${REACT_APP_CLOUD_GATEWAY}${REACT_APP_MICRO_REVIEW}/projects?userId=${id}`)
+      .then((res) => {
+
+      const navigationsData = [];
+       navigationsData.push( { name: 'New Project', icon: 'book', path: '/projects/new' },
+       { label: 'Projects', type: 'label' });
+
+        res.data.forEach((element) => {
+          navigationsData.push({
+            name: element.name,
+            icon: 'circle',
+            path: `/projects/${element.id}`
+          });
+        });
+
+        if (res.data.length === 0) {
+          navigationsData.push({
+            name: 'No projects',
+            icon: 'circle',
+            path: '#'
+          });
+        }
+
+        navigationsData.push(  { label: 'Support', type: 'label' },
+        {
+          name: 'Documentation',
+          icon: 'launch',
+          type: 'extLink',
+          path: ''
+        } );
+
+        setNavigations(navigationsData);
+
+        setLoading(false);
+
+      }).catch((err) => {
+        console.log(err);
+      });
+
+  }, [])
+
 
   return (
     <Fragment>

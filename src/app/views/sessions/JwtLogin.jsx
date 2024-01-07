@@ -1,8 +1,9 @@
 import { LoadingButton } from '@mui/lab';
-import { Card, Checkbox, Grid, TextField } from '@mui/material';
+import axios from 'axios';
+import { Card, Grid, TextField } from '@mui/material';
 import { Box, styled, useTheme } from '@mui/material';
-import { Paragraph } from 'app/theme/Typography';
-import useAuth from 'app/hooks/useAuth';
+import { H4, Paragraph } from 'app/theme/Typography';
+import { Alert, Button, Snackbar } from '@mui/material';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -17,6 +18,16 @@ const ContentBox = styled(Box)(() => ({
   padding: '32px',
   position: 'relative',
   background: 'rgba(0, 0, 0, 0.01)'
+}));
+
+const ContentRoot = styled('div')(({ theme }) => ({
+  '& .icon': { fontSize: 20 },
+  '& .success': { backgroundColor: theme.palette.success.main },
+  '& .error': { backgroundColor: theme.palette.error.main },
+  '& .info': { backgroundColor: theme.palette.primary.main },
+  '& .iconVariant': { opacity: 0.9, marginRight: theme.spacing(1) },
+  '& .message': { display: 'flex', alignItems: 'center' },
+  '& .margin': { margin: theme.spacing(1) }
 }));
 
 const JWTRoot = styled(JustifyBox)(() => ({
@@ -34,9 +45,8 @@ const JWTRoot = styled(JustifyBox)(() => ({
 
 // inital login credentials
 const initialValues = {
-  email: 'jason@ui-lib.com',
-  password: 'dummyPass',
-  remember: true
+  email: '',
+  password: '',
 };
 
 // form field validation schema
@@ -49,19 +59,40 @@ const validationSchema = Yup.object().shape({
 
 const JwtLogin = () => {
   const theme = useTheme();
+  const { REACT_APP_CLOUD_GATEWAY, REACT_APP_MICRO_SECURITY } = process.env;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const { login } = useAuth();
+  const handleClick = () => {
+    setOpen(true);
+  }
+  const handleClose = (_, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  }
+  
 
   const handleFormSubmit = async (values) => {
     setLoading(true);
-    try {
-      await login(values.email, values.password);
-      navigate('/');
-    } catch (e) {
-      setLoading(false);
-    }
+    await axios.post(`${REACT_APP_CLOUD_GATEWAY}${REACT_APP_MICRO_SECURITY}/auth/login`, values)
+      .then((res) => {
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('id', res.data.id);
+        localStorage.setItem('name', res.data.name);
+        localStorage.setItem('email', res.data.email);
+
+        navigate('/dashboard/app', { replace: true });
+        setLoading(false);
+
+      }).catch((err) => {
+        console.log(err);
+        setLoading(false);
+        handleClick();
+      });
+
   };
 
   return (
@@ -76,6 +107,9 @@ const JwtLogin = () => {
 
           <Grid item sm={6} xs={12}>
             <ContentBox>
+              <H4 color="primary.main" fontWeight="normal" sx={{ mb: 3 }}>
+                Login
+              </H4>
               <Formik
                 onSubmit={handleFormSubmit}
                 initialValues={initialValues}
@@ -113,21 +147,10 @@ const JwtLogin = () => {
                       sx={{ mb: 1.5 }}
                     />
 
-                    <FlexBox justifyContent="space-between">
-                      <FlexBox gap={1}>
-                        <Checkbox
-                          size="small"
-                          name="remember"
-                          onChange={handleChange}
-                          checked={values.remember}
-                          sx={{ padding: 0 }}
-                        />
-
-                        <Paragraph>Remember Me</Paragraph>
-                      </FlexBox>
+                    <FlexBox justifyContent="flex-end" alignItems="center">
 
                       <NavLink
-                        to="/session/forgot-password"
+                        to="/forgot-password"
                         style={{ color: theme.palette.primary.main }}
                       >
                         Forgot password?
@@ -147,7 +170,7 @@ const JwtLogin = () => {
                     <Paragraph>
                       Don't have an account?
                       <NavLink
-                        to="/session/signup"
+                        to="/sign-up"
                         style={{ color: theme.palette.primary.main, marginLeft: 5 }}
                       >
                         Register
@@ -160,6 +183,17 @@ const JwtLogin = () => {
           </Grid>
         </Grid>
       </Card>
+
+      <ContentRoot>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        ContentProps={{ "aria-describedby": "message-id" }}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }} variant="filled">
+          Invalid email or password!
+        </Alert>
+      </Snackbar>
+    </ContentRoot>
     </JWTRoot>
   );
 };

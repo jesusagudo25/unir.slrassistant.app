@@ -21,23 +21,16 @@ const Container = styled('div')(({ theme }) => ({
     }
 }));
 
-export default function QualityAssessment() {
+export default function DataExtraction() {
     return (
         <Container>
             <Box className="breadcrumb">
-                <Breadcrumb routeSegments={[{ name: 'Projects', path: '/projects' }, { name: 'Quality Assessment' }]} />
+                <Breadcrumb routeSegments={[{ name: 'Projects', path: '/projects' }, { name: 'Data Extraction' }]} />
             </Box>
 
             <Stack spacing={3} sx={{ mb: 3 }}>
-                <Button variant="contained" color="primary" size="medium" startIcon={<AddIcon />} sx={{ width: '30%' }}>
-                    Apply assessment massivly
-                </Button>
-
-            </Stack>
-
-            <Stack spacing={3} sx={{ mb: 3 }}>
-                <H5 >Statistics for the assessment</H5>
-                <StatResearchCards cardList={[{ name: 'Total', amount:'0', icon: 'list'}, { name: 'Included', amount: '0', icon: 'check_circle' }, { name: 'Excluded', amount: '0', icon: 'cancel' }, { name: 'Undecided', amount: '0', icon: 'help' }]} />
+                <H5 >Statistics for the data extraction</H5>
+                <StatResearchCards cardList={[{ name: 'Total', amount: '0', icon: 'list' }]} />
             </Stack>
 
             <Stack spacing={3}>

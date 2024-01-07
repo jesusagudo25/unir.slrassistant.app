@@ -17,17 +17,16 @@ const ListLabel = styled(Paragraph)(({ theme, mode }) => ({
 
 const ExtAndIntCommon = {
   display: 'flex',
-  overflow: 'hidden',
+
   borderRadius: '4px',
   height: 44,
-  whiteSpace: 'pre',
   marginBottom: '8px',
   textDecoration: 'none',
   justifyContent: 'space-between',
   transition: 'all 150ms ease-in',
   '&:hover': { background: 'rgba(255, 255, 255, 0.08)' },
   '&.compactNavItem': {
-    overflow: 'hidden',
+
     justifyContent: 'center !important',
   },
   '& .icon': {
@@ -122,10 +121,8 @@ const MatxVerticalNav = ({ items }) => {
           <InternalLink key={index}>
             <NavLink
               to={item.path}
-              className={({ isActive }) =>
-                isActive
-                  ? `navItemActive ${mode === 'compact' && 'compactNavItem'}`
-                  : `${mode === 'compact' && 'compactNavItem'}`
+              className={() =>
+                item.path === window.location.pathname ? 'navItemActive' : ''
               }
             >
               <ButtonBase key={item.name} name="child" sx={{ width: '100%' }}>
@@ -151,7 +148,7 @@ const MatxVerticalNav = ({ items }) => {
                     </Box>
                   </Fragment>
                 )}
-                <StyledText mode={mode} className="sidenavHoverShow">
+                <StyledText mode={mode} className="sidenavHoverShow" sx={{ textAlign: 'left' }}>
                   {item.name}
                 </StyledText>
 

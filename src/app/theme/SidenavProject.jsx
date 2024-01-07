@@ -5,6 +5,9 @@ import { MatxVerticalNav } from 'app/theme';
 import useSettings from 'app/hooks/useSettings';
 import { useParams } from 'react-router-dom';
 import { navigationsProject } from 'app/navigationsProject';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
 const StyledScrollBar = styled(Scrollbar)(() => ({
   paddingLeft: '1rem',
@@ -25,14 +28,16 @@ const SideNavMobile = styled('div')(({ theme }) => ({
 }));
 
 const SidenavProject = ({ children }) => {
+
+  const { REACT_APP_CLOUD_GATEWAY, REACT_APP_MICRO_REVIEW } = process.env;
+  const [isLoading, setLoading] = useState(false);
   const { settings, updateSettings } = useSettings();
 
   const { id } = useParams();
-  const navigationsProjectDisplay = navigationsProject(id);
+  const [navigationsProjectDisplay, setNavigationsProjectDisplay] = useState([]);
+  const [project, setProject] = useState({});
 
   //replace :id with current project id
-  
-
   const updateSidebarMode = (sidebarSettings) => {
     let activeLayoutSettingsName = settings.activeLayout + 'Settings';
     let activeLayoutSettings = settings[activeLayoutSettingsName];
@@ -48,6 +53,20 @@ const SidenavProject = ({ children }) => {
       }
     });
   };
+
+  useEffect(() => {
+    setLoading(true);
+      axios.get(`${REACT_APP_CLOUD_GATEWAY}${REACT_APP_MICRO_REVIEW}/projects/${id}`)
+      .then((res) => {
+        setProject(res.data);
+        setNavigationsProjectDisplay(navigationsProject(id, res.data.name));
+        setLoading(false);
+
+      }).catch((err) => {
+        console.log(err);
+      });
+
+  }, [])
 
   return (
     <Fragment>

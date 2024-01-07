@@ -1,9 +1,9 @@
 import { useTheme } from '@emotion/react';
+import axios from 'axios';
 import { LoadingButton } from '@mui/lab';
-import { Card, Checkbox, Grid, TextField } from '@mui/material';
+import { Card, Grid, TextField } from '@mui/material';
 import { Box, styled } from '@mui/material';
-import { Paragraph } from 'app/theme/Typography';
-import useAuth from 'app/hooks/useAuth';
+import { H4,  Paragraph } from 'app/theme/Typography';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -36,12 +36,12 @@ const JWTRegister = styled(JustifyBox)(() => ({
 const initialValues = {
   email: '',
   password: '',
-  username: '',
-  remember: true
+  name: '',
 };
 
 // form field validation schema
 const validationSchema = Yup.object().shape({
+  name: Yup.string().required('Name is required!'),
   password: Yup.string()
     .min(6, 'Password must be 6 character length')
     .required('Password is required!'),
@@ -50,21 +50,27 @@ const validationSchema = Yup.object().shape({
 
 const JwtRegister = () => {
   const theme = useTheme();
-  const { register } = useAuth();
+  const { REACT_APP_CLOUD_GATEWAY, REACT_APP_MICRO_SECURITY } = process.env;
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = async (values) => {
     setLoading(true);
 
-    try {
-      register(values.email, values.username, values.password);
-      navigate('/');
-      setLoading(false);
-    } catch (e) {
-      console.log(e);
-      setLoading(false);
-    }
+    await axios.post(`${REACT_APP_CLOUD_GATEWAY}${REACT_APP_MICRO_SECURITY}/auth/register`, values)
+      .then((res) => {
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('id', res.data.id);
+        localStorage.setItem('name', res.data.name);
+        localStorage.setItem('email', res.data.email);
+
+        navigate('/dashboard/app', { replace: true });
+        setLoading(false);
+
+      }).catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -83,6 +89,9 @@ const JwtRegister = () => {
 
           <Grid item sm={6} xs={12}>
             <Box p={4} height="100%">
+              <H4 color="primary.main" fontWeight="normal" sx={{ mb: 3 }}>
+                Register
+              </H4>
               <Formik
                 onSubmit={handleFormSubmit}
                 initialValues={initialValues}
@@ -94,14 +103,14 @@ const JwtRegister = () => {
                       fullWidth
                       size="small"
                       type="text"
-                      name="username"
-                      label="Username"
+                      name="name"
+                      label="Name"
                       variant="outlined"
                       onBlur={handleBlur}
-                      value={values.username}
+                      value={values.name}
                       onChange={handleChange}
-                      helperText={touched.username && errors.username}
-                      error={Boolean(errors.username && touched.username)}
+                      helperText={touched.name && errors.name}
+                      error={Boolean(errors.name && touched.name)}
                       sx={{ mb: 3 }}
                     />
 
@@ -134,34 +143,20 @@ const JwtRegister = () => {
                       sx={{ mb: 2 }}
                     />
 
-                    <FlexBox gap={1} alignItems="center">
-                      <Checkbox
-                        size="small"
-                        name="remember"
-                        onChange={handleChange}
-                        checked={values.remember}
-                        sx={{ padding: 0 }}
-                      />
-
-                      <Paragraph fontSize={13}>
-                        I have read and agree to the terms of service.
-                      </Paragraph>
-                    </FlexBox>
-
                     <LoadingButton
                       type="submit"
                       color="primary"
                       loading={loading}
                       variant="contained"
-                      sx={{ mb: 2, mt: 3 }}
+                      sx={{ mb: 2 }}
                     >
-                      Regiser
+                      Register
                     </LoadingButton>
 
                     <Paragraph>
                       Already have an account?
                       <NavLink
-                        to="/session/signin"
+                        to="/sign-in"
                         style={{ color: theme.palette.primary.main, marginLeft: 5 }}
                       >
                         Login

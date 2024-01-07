@@ -37,7 +37,7 @@ export default function Selection() {
 
           <Stack spacing={3} sx={{ mb: 3 }}>
               <H5 >Statistics for the selection</H5>
-              <StatResearchCards cardList={[{ name: 'Included', amount: '0', icon: 'check_circle' }, { name: 'Excluded', amount: '0', icon: 'cancel' }, { name: 'Undecided', amount: '0', icon: 'help' }]} />
+              <StatResearchCards cardList={[{ name: 'Total', amount:'0', icon: 'list'},{ name: 'Included', amount: '0', icon: 'check_circle' }, { name: 'Excluded', amount: '0', icon: 'cancel' }, { name: 'Undecided', amount: '0', icon: 'help' }]} />
           </Stack>
 
           <Stack spacing={3}>

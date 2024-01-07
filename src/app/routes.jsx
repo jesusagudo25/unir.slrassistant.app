@@ -1,9 +1,10 @@
 import { lazy } from 'react';
-import AuthGuard from './auth/AuthGuard';
 import Loadable from './theme/Loadable';
 import MatxLayout from './theme/MatxLayout/MatxLayout';
 import MatxLayout2 from './theme/MatxLayout/MatxLayout2';
 import QualityAssessment from './views/steps/QualityAssessment';
+
+
 
 
 // session pages
@@ -11,6 +12,7 @@ const NotFound = Loadable(lazy(() => import('app/views/sessions/NotFound')));
 const JwtLogin = Loadable(lazy(() => import('app/views/sessions/JwtLogin')));
 const JwtRegister = Loadable(lazy(() => import('app/views/sessions/JwtRegister')));
 const ForgotPassword = Loadable(lazy(() => import('app/views/sessions/ForgotPassword')));
+const ResetPassword = Loadable(lazy(() => import('app/views/sessions/ResetPassword')));
 
 // dashboard page
 const Analytics = Loadable(lazy(() => import('app/views/dashboard/Analytics')));
@@ -28,13 +30,17 @@ const ReviewProtocol = Loadable(lazy(() => import('app/views/steps/ReviewProtoco
 const Timeline = Loadable(lazy(() => import('app/views/steps/Timeline')));
 const Search = Loadable(lazy(() => import('app/views/steps/Search')));
 const Selection = Loadable(lazy(() => import('app/views/steps/Selection')));
+const DataExtraction = Loadable(lazy(() => import('app/views/steps/DataExtraction')));
+const DataSynthesis = Loadable(lazy(() => import('app/views/steps/DataSynthesis')));
+const Report = Loadable(lazy(() => import('app/views/steps/Report')));
+const Chat = Loadable(lazy(() => import('app/views/communication/Chat')));
+const Files = Loadable(lazy(() => import('app/views/communication/Files')));
+const Tasks = Loadable(lazy(() => import('app/views/communication/Tasks')));
 
 const routes = [
   {
     element: (
-      <AuthGuard>
         <MatxLayout />
-      </AuthGuard>
     ),
     children: [
       // dashboard route
@@ -54,9 +60,7 @@ const routes = [
   // project pages route
   {
     element: (
-      <AuthGuard>
         <MatxLayout2 />
-      </AuthGuard>
     ),
     children: [
       {
@@ -89,27 +93,27 @@ const routes = [
       },
       {
         path: '/projects/:id/data-extraction',
-        element: <>Demo</>
+        element: <DataExtraction />,
       },
       {
-        path: '/projects/:id/results',
-        element: <>Demo</>
+        path: '/projects/:id/data-synthesis',
+        element: <DataSynthesis />,
       },
       {
-        path: '/projects/:id/visualization',
-        element: <>Demo</>
+        path: '/projects/:id/report',
+        element: <Report />,
       },
       {
         path: '/projects/:id/chat',
-        element: <>Demo</>
+        element: <Chat />,
       },
       {
         path: '/projects/:id/files',
-        element: <>Demo</>
+        element: <Files />,
       },
       {
-        path: '/projects/:id/kanban',
-        element: <>Demo</>
+        path: '/projects/:id/tasks',
+        element: <Tasks />,
       }
     ]
   },
@@ -119,6 +123,7 @@ const routes = [
   { path: '/sign-in', element: <JwtLogin /> },
   { path: '/sign-up', element: <JwtRegister /> },
   { path: '/forgot-password', element: <ForgotPassword /> },
+  { path: '/reset-password/:token', element: <ResetPassword /> },
 
   { path: '/', element: <LandingPage /> },
   { path: '*', element: <NotFound /> }

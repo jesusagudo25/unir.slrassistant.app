@@ -20,6 +20,10 @@ import {
 import { Span } from "app/theme/Typography";
 import { useEffect, useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { LoadingButton } from '@mui/lab';
+
 
 const TextField = styled(TextValidator)(() => ({
     width: "100%",
@@ -28,39 +32,36 @@ const TextField = styled(TextValidator)(() => ({
 
 
 const NewProjectForm = () => {
-    const [state, setState] = useState({});
+    const { REACT_APP_CLOUD_GATEWAY, REACT_APP_MICRO_REVIEW } = process.env;
 
-    useEffect(() => {
-        ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
-            if (value !== state.password) return false;
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
-            return true;
-        });
-        return () => ValidatorForm.removeValidationRule("isPasswordMatch");
-    }, [state.password]);
+    const [data, setData] = useState({
+        name: "",
+        category: "",
+        keywords: "",
+        description: "",
+        startDate: new Date(),
+        endDate: new Date(),
+        visibility: "",
+        userId: localStorage.getItem('id')
+    });
 
-    const handleSubmit = (event) => {
-        // console.log("submitted");
-        // console.log(event);
+    const handleSubmit = async (event) =>  {        
+        setLoading(true);
+
+        await axios.post(`${REACT_APP_CLOUD_GATEWAY}${REACT_APP_MICRO_REVIEW}/projects`, data)
+          .then((res) => {
+    
+            navigate('/dashboard/app', { replace: true });
+            window.location.reload();
+            setLoading(false);
+    
+          }).catch((err) => {
+            console.log(err);
+          });
     };
-
-    const handleChange = (event) => {
-        event.persist();
-        setState({ ...state, [event.target.name]: event.target.value });
-    };
-
-    const handleDateChange = (date) => setState({ ...state, date });
-
-    const {
-        name,
-        category,
-        description,
-        startDate,
-        endDate,
-        keywords,
-        visibility
-    } = state;
-
 
     return (
         <div>
@@ -70,27 +71,40 @@ const NewProjectForm = () => {
                         <TextField
                             type="text"
                             name="name"
-                            id="standard-basic"
-                            value={name || ""}
-                            onChange={handleChange}
+                            id="name"
+                            value={data.name || ""}
+                            onChange={(e) => setData({ ...data, name: e.target.value })}
                             errorMessages={["this field is required"]}
                             label="Name"
-                            validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
+                            validators={["required", "minStringLength: 4"]}
                         />
 
                         <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                            <InputLabel id="category-label">Category</InputLabel>
                             <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={category || ""}
+                                labelId="category-label"
+                                id="category"
+                                value={data.category || ""}
                                 label="Category"
-                                onChange={handleChange}
+                                onChange={(e) => setData({ ...data, category: e.target.value })}
                                 sx={{ mb: 2 }}
                             >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
+                                <MenuItem value={'Health Sciences and Medicine'}>Health Sciences and Medicine</MenuItem>
+                                <MenuItem value={'Social Sciences and Psychology'}>Social Sciences and Psychology</MenuItem>
+                                <MenuItem value={'Information and Computing Technologies'}>Information and Computing Technologies</MenuItem>
+                                <MenuItem value={'Education'}>Education</MenuItem>
+                                <MenuItem value={'Environmental Sciences'}>Environmental Sciences</MenuItem>
+                                <MenuItem value={'Economy and Business'}>Economy and Business</MenuItem>
+                                <MenuItem value={'Engineering'}>Engineering</MenuItem>
+                                <MenuItem value={'Communication Sciences'}>Communication Sciences</MenuItem>
+                                <MenuItem value={'Political Science'}>Political Science</MenuItem>
+                                <MenuItem value={'Law'}>Law</MenuItem>
+                                <MenuItem value={'Architecture'}>Architecture</MenuItem>
+                                <MenuItem value={'Design'}>Design</MenuItem>
+                                <MenuItem value={'Arts'}>Arts</MenuItem>
+                                <MenuItem value={'Humanities'}>Humanities</MenuItem>
+                                <MenuItem value={'Agriculture'}>Agriculture</MenuItem>
+                                <MenuItem value={'Other'}>Other</MenuItem>
                             </Select>
                         </FormControl>
 
@@ -98,9 +112,9 @@ const NewProjectForm = () => {
                             type="text"
                             name="keywords"
                             label="Keywords"
-                            value={keywords || ""}
-                            onChange={handleChange}
-                            validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
+                            value={data.keywords || ""}
+                            onChange={(e) => setData({ ...data, keywords: e.target.value })}
+                            validators={["required", "minStringLength: 4"]}
                             errorMessages={["this field is required"]}
                             multiline
                         />
@@ -109,9 +123,9 @@ const NewProjectForm = () => {
                             type="text"
                             name="description"
                             label="Description"
-                            value={description || ""}
-                            onChange={handleChange}
-                            validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
+                            value={data.description || ""}
+                            onChange={(e) => setData({ ...data, description: e.target.value })}
+                            validators={["required", "minStringLength: 4"]}
                             errorMessages={["this field is required"]}
                             multiline
                         />
@@ -121,8 +135,8 @@ const NewProjectForm = () => {
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DatePicker
                                         label="Start Date"
-                                        value={startDate}
-                                        onChange={handleDateChange}
+                                        value={data.startDate}
+                                        onChange={(e) => setData({ ...data, startDate: e})}
                                         renderInput={(params) => <TextField {...params} />}
                                     />
                                 </LocalizationProvider>
@@ -135,8 +149,8 @@ const NewProjectForm = () => {
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DatePicker
                                         label="End Date"
-                                        value={endDate}
-                                        onChange={handleDateChange}
+                                        value={data.endDate}
+                                        onChange={(e) => setData({ ...data, endDate: e})}
                                         renderInput={(params) => <TextField {...params} />}
                                     />
                                 </LocalizationProvider>
@@ -148,8 +162,8 @@ const NewProjectForm = () => {
                         <RadioGroup
                             name="visibility"
                             sx={{ mb: 2, paddingLeft: "16px" }}
-                            value={visibility || ""}
-                            onChange={handleChange}
+                            value={data.visibility || ""}
+                            onChange={(e) => setData({ ...data, visibility: e.target.value })}
                         >
                             <FormControlLabel
                                 value="Public"
@@ -173,10 +187,16 @@ const NewProjectForm = () => {
 
                 <Divider sx={{ mb:2 }} />
 
-                <Button color="primary" variant="contained" type="submit">
-                    <Icon>send</Icon>
-                    <Span sx={{ pl: 1, textTransform: "capitalize" }}>Create</Span>
-                </Button>
+
+                    <LoadingButton
+                      type="submit"
+                      color="primary"
+                      loading={loading}
+                      variant="contained"
+                      sx={{ mb: 2 }}
+                    >
+                      Register
+                    </LoadingButton>
             </ValidatorForm>
         </div>
     )

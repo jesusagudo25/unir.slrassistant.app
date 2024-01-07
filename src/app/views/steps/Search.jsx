@@ -96,7 +96,7 @@ export default function Search() {
 
             <Stack spacing={3} sx={{ my: 3 }}>
                 <H5 >Statistics for the search</H5>
-                <StatResearchCards cardList={[{ name: 'Included', amount: '0', icon: 'check_circle' }, { name: 'Excluded', amount: '0', icon: 'cancel' }, { name: 'Undecided', amount: '0', icon: 'help' },{ name: 'Duplicate', amount: '0', icon: 'file_copy' }]} />
+                <StatResearchCards cardList={[{ name: 'Total', amount:'0', icon: 'list'},{ name: 'Excluded', amount: '0', icon: 'cancel' } ,{ name: 'Duplicate', amount: '0', icon: 'file_copy' }]} />
             </Stack>
 
             <Stack spacing={3}>

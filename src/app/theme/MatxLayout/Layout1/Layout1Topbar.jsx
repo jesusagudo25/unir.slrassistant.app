@@ -1,30 +1,22 @@
 import { memo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Hidden,
   Icon,
-  IconButton,
+
   MenuItem,
-  useMediaQuery,
+
   Box,
   styled,
-  useTheme,
   Button
 } from '@mui/material';
 
 import { MatxMenu, MatxSearchBox } from 'app/theme';
 import { themeShadows } from 'app/theme/MatxTheme/themeColors';
-import useAuth from 'app/hooks/useAuth';
-import useSettings from 'app/hooks/useSettings';
 import { topBarHeight } from 'app/utils/constant';
 import { Span } from '../../Typography';
 
-
-
-const StyledIconButton = styled(IconButton)(({ theme }) => ({
-  color: theme.palette.text.primary
-}));
 
 const TopbarRoot = styled('div')({
   top: 0,
@@ -75,29 +67,21 @@ const StyledItem = styled(MenuItem)(({ theme }) => ({
   '& span': { marginRight: '10px', color: theme.palette.text.primary }
 }));
 
-const IconBox = styled('div')(({ theme }) => ({
-  display: 'inherit',
-  [theme.breakpoints.down('md')]: { display: 'none !important' }
-}));
-
 const Layout1Topbar = () => {
-  const theme = useTheme();
-
-  const { logout, user } = useAuth();
-
+  const navigate = useNavigate();
 
   return (
     <TopbarRoot>
       <TopbarContainer>
         <Box display="flex">
 
-          <Link to="/">
+          <Link to="/dashboard/app">
             <Button variant="a" color="secondary" size="small">
               Dashboard
             </Button>
           </Link>
 
-          <Link to="/page-layouts/user-profile">
+          <Link to="/repositories">
             <Button variant="a" color="secondary" size="small">
               Repositories
             </Button>
@@ -113,33 +97,22 @@ const Layout1Topbar = () => {
               <UserMenu>
                 <Hidden xsDown>
                   <Span>
-                    Hi <strong>{user.name}</strong>
+                    Hi <strong>{localStorage.getItem('name')}</strong>
                   </Span>
                 </Hidden>
-                <Avatar src={user.avatar} sx={{ cursor: 'pointer' }} />
+                <Avatar  sx={{ cursor: 'pointer' }} />
               </UserMenu>
             }
           >
-            <StyledItem>
-              <Link to="/">
-                <Icon> home </Icon>
-                <Span> Home </Span>
-              </Link>
-            </StyledItem>
 
             <StyledItem>
-              <Link to="/page-layouts/user-profile">
+              <Link to="/profile">
                 <Icon> person </Icon>
                 <Span> Profile </Span>
               </Link>
             </StyledItem>
 
-            <StyledItem>
-              <Icon> settings </Icon>
-              <Span> Settings </Span>
-            </StyledItem>
-
-            <StyledItem onClick={logout}>
+            <StyledItem onClick={() => { localStorage.clear(); navigate('/sign-in'); }}>
               <Icon> power_settings_new </Icon>
               <Span> Logout </Span>
             </StyledItem>
