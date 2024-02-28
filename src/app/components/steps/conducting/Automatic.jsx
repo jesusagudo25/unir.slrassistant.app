@@ -5,6 +5,8 @@ import {
     Grid,
     Icon,
 
+    MenuItem,
+
     Stack,
 
     styled,
@@ -37,6 +39,10 @@ export default function Automatic() {
         setState({ ...state, [event.target.name]: event.target.value });
     };
 
+    const fieldsList = [
+        '(artificial intelligence) [IN "All metadata] OR (machine learning) [IN All metadata] AND (medical diagnosis) [IN All metadata] OR (clinical diagnosis) [IN All metadata]',
+    ];
+
     const {
         name,
     } = state;
@@ -45,7 +51,7 @@ export default function Automatic() {
             <ValidatorForm onSubmit={handleSubmit} onError={() => null}>
                 <H5 >List of search strings</H5>
                 <Stack direction="row" sx={{ gap: 3, alignItems: 'center', justifyContent: 'space-start', my: 2 }}>
-                        <FormControl sx={{ width: '40%' }}>
+                        <FormControl sx={{ width: '100%' }}>
                             <SelectValidator
                                 select
                                 fullWidth
@@ -54,9 +60,11 @@ export default function Automatic() {
                                 errorMessages={["this field is required"]}
                                 size="small"
                             >
-                                <option value="a">Systematic review</option>
-                                <option value="b">Meta-analysis</option>
-                                <option value="c">Randomized controlled trial</option>
+                                {
+                                    fieldsList.map((item, index) => (
+                                        <MenuItem key={index} value={item}>{item}</MenuItem>
+                                    ))
+                                }
                             </SelectValidator>
                         </FormControl>
 

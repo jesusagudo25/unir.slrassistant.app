@@ -138,21 +138,8 @@ const ProjectDetails = () => {
               onClick={() => handleOpen()}
             ><Icon>add</Icon> Add Collaborator</Button>
           </Stack>
-          <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2}>
-            <IconButton color="inherit" sx={{ padding: '8px', borderRadius: '100%', backgroundColor: 'rgba(0,0,0,0.1)', '&:hover': { backgroundColor: 'rgba(0,0,0,0.2)' } }}>
-              <Icon>star</Icon>
-            </IconButton>
-            <IconButton color="inherit" sx={{ padding: '8px', borderRadius: '100%', backgroundColor: 'rgba(0,0,0,0.1)', '&:hover': { backgroundColor: 'rgba(0,0,0,0.2)' } }}>
-              <Icon>call_split</Icon>
-            </IconButton>
-          </Stack>
-        </Stack>
 
-        <Grid spacing={3}>
-          <Grid item >
-            <StatProjectCards />
-          </Grid>
-        </Grid>
+        </Stack>
 
         <Grid spacing={3}>
           <Grid item >

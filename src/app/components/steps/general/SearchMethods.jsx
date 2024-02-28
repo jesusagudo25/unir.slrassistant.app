@@ -5,206 +5,166 @@ import {
 
     FormControl,
 
-    FormLabel,
-
     Grid,
     Icon,
 
     Select,
-
     Stack,
-
+    Snackbar,
+    Alert,
+    Backdrop,
+    CircularProgress,
     styled,
 } from "@mui/material";
 import { H3, H5, Span } from 'app/theme/Typography';
 import { useEffect, useState } from "react";
-import { SelectValidator, TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import ListItems from "./ListItem";
+import SearchStringGroup from "./SearchStringGroup";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
-const TextField = styled(TextValidator)(() => ({
-    width: "100%",
-    marginBottom: "16px",
+const ContentRoot = styled('div')(({ theme }) => ({
+    '& .icon': { fontSize: 20 },
+    '& .success': { backgroundColor: theme.palette.success.main },
+    '& .error': { backgroundColor: theme.palette.error.main },
+    '& .info': { backgroundColor: theme.palette.primary.main },
+    '& .iconVariant': { opacity: 0.9, marginRight: theme.spacing(1) },
+    '& .message': { display: 'flex', alignItems: 'center' },
+    '& .margin': { margin: theme.spacing(1) }
 }));
 
 export default function SearchMethods() {
 
-    const [state, setState] = useState({});
+    const { REACT_APP_CLOUD_GATEWAY, REACT_APP_MICRO_REVIEW } = process.env;
+    const { id } = useParams();
 
-    useEffect(() => {
-        ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
-            if (value !== state.password) return false;
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("");
+    const [severity, setSeverity] = useState("success");
 
-            return true;
-        });
-        return () => ValidatorForm.removeValidationRule("isPasswordMatch");
-    }, [state.password]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [groups, setGroups] = useState([
+        {
+            id: 1,
+            terms: '',
+            metadata: 'All metadata',
+            operator: '',
+        },
+        {
+            id: 2,
+            terms: '',
+            metadata: 'All metadata',
+            operator: 'AND',
+        },
+        {
+            id: 3,
+            terms: '',
+            metadata: 'All metadata',
+            operator: 'AND',
+        }
+    ]);
+    const [groupsStore, setGroupsStore] = useState([]);
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    }
 
     const handleSubmit = (event) => {
-        // console.log("submitted");
-        // console.log(event);
+        const uuid = uuidv4();
+        event.preventDefault();
+
+        //add uuid to groups
+        groups.forEach((item) => {
+            item.uuid = uuid;
+        });
+
+        const groupsToSave = groups.map((item) => {
+            return {
+                uuid: item.uuid,
+                terms: item.terms,
+                metadata: item.metadata,
+                operator: item.operator,
+                orderByIndex: item.id,
+                projectId: id
+            }
+        } );
+
+        setIsLoading(true);
+        axios.post(`${REACT_APP_CLOUD_GATEWAY}${REACT_APP_MICRO_REVIEW}/projects/${id}/search-strings`, {
+            searchStrings: groupsToSave
+        })
+            .then((res) => {
+                console.log(res);
+                setIsLoading(false);
+                setOpen(true);
+                setMessage("Search string added successfully");
+                setSeverity("success");
+                getGroups();
+                setGroups([{ id: 1, terms: '', metadata: 'All metadata', operator: 'AND' }, { id: 2, terms: '', metadata: 'All metadata', operator: 'AND' }, { id: 3, terms: '', metadata: 'All metadata', operator: 'AND' }])
+            }
+            ).catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
+
     };
 
-    const handleChange = (event) => {
-        event.persist();
-        setState({ ...state, [event.target.name]: event.target.value });
-    };
+    const getGroups = () => {
+        setIsLoading(true);
+        axios.get(`${REACT_APP_CLOUD_GATEWAY}${REACT_APP_MICRO_REVIEW}/projects/${id}/search-strings`)
+            .then((res) => {
+                //groupby
+                const groupByUuid = Object.groupBy(res.data, (item) => item.uuid);
+                let groupsToDisplay = [];
 
-    const {
-        name,
-    } = state;
+                Object.keys(groupByUuid).forEach((key) => {
+                    let terms = "";
+
+                    groupByUuid[key].sort((a, b) => a.orderByIndex - b.orderByIndex);
+                    groupByUuid[key].forEach((item) => {
+                        if (item.orderByIndex === 1) {
+                            terms += `(${item.terms}) [IN "${item.metadata}]`;
+                        }
+                        else {
+                            terms += ` ${item.operator} (${item.terms}) [IN ${item.metadata}]`;
+                        }
+                    });
+
+                    groupsToDisplay.push({
+                        id: key,
+                        description: terms,
+                    });
+                });
+
+                setGroupsStore(groupsToDisplay);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+            });
+    }
+
+    useEffect(() => {
+        getGroups();
+    }, []);
 
     return (
         <div>
             <ValidatorForm onSubmit={handleSubmit} onError={() => null}>
                 <H5 >Search Strings</H5>
+
+                <SearchStringGroup groups={groups} setGroups={setGroups} />
+
                 <Stack direction="row" sx={{ justifyContent: "flex-start", alignItems: "center", width: "100%", my: 2, gap: 2 }}>
-
-                    <FormControl size="small" sx={{ width: "45%"}}>
-                        <TextField
-                            type="text"
-                            name="description"
-                            id="standard-basic"
-                            value={name || ""}
-                            onChange={handleChange}
-                            errorMessages={["this field is required"]}
-                            label="Please enter terms to search"
-                            validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
-                            size="small"
-                            sx={{  mb:0  }}
-                        />
-                    </FormControl>
-
-                    <Box sx={{ width: "2%" }} >
-                        <H3>IN</H3>
-                    </Box>
-
-                    <FormControl size="small" sx={{ width: "20%" }}>
-                        <Select
-                            fullWidth
-                            label="Metadata"
-                            name="metadata"
-                            errorMessages={["this field is required"]}
-                            sx={{ width: "200px" }}
-                        >
-                            <option value="a">All metadata</option>
-                            <option value="b">Title</option>
-                            <option value="c">Abstract</option>
-                        </Select>
-                    </FormControl>
-                </Stack>
-
-                <Stack direction="row"  sx={{  alignItems: "center", width: "100%", my: 2, gap: 2 }}>
-                    <FormControl size="small" sx = {{ width: "8.5%"}}>
-                        <Select
-                            fullWidth
-                            label="Metadata"
-                            name="metadata"
-                            errorMessages={["this field is required"]}
-                        >
-                            <option value="a">All metadata</option>
-                            <option value="b">Title</option>
-                            <option value="c">Abstract</option>
-                        </Select>
-                    </FormControl>
-
-                    <FormControl size="small" sx={{ width: "35%"}}>
-                        <TextField
-                            type="text"
-                            name="description"
-                            id="standard-basic"
-                            value={name || ""}
-                            onChange={handleChange}
-                            errorMessages={["this field is required"]}
-                            label="Please enter terms to search"
-                            validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
-                            size="small"
-                            sx={{  mb:0  }}
-                        />
-                    </FormControl>
-
-                    <Box sx={{ width: "2%" }} >
-                        <H3>IN</H3>
-                    </Box>
-
-
-                    <FormControl size="small" sx={{ width: "17%" }}>
-                        <Select
-                            fullWidth
-                            label="Metadata"
-                            name="metadata"
-                            errorMessages={["this field is required"]}
-                            sx={{ width: "200px" }}
-                        >
-                            <option value="a">All metadata</option>
-                            <option value="b">Title</option>
-                            <option value="c">Abstract</option>
-                        </Select>
-                    </FormControl>
-
-                    <Button color="secondary" variant="contained" type="submit" size="small" >
-                        <Icon>remove</Icon>
-                    </Button>
-
-                </Stack>
-                <Stack direction="row" sx={{  alignItems: "center", width: "100%", my: 2, gap: 2 }}>
-                    <FormControl size="small" sx = {{ width: "8.5%"}}>
-                        <Select
-                            fullWidth
-                            label="Operator"
-                            name="operator"
-                            errorMessages={["this field is required"]}
-                        >
-                            <option value="a">AND</option>
-                            <option value="b">OR</option>
-                            <option value="c">NOT</option>
-                        </Select>
-                    </FormControl>
-
-                    <FormControl size="small" sx={{ width: "35%"}}>
-                        <TextField
-                            type="text"
-                            name="description"
-                            id="standard-basic"
-                            value={name || ""}
-                            onChange={handleChange}
-                            errorMessages={["this field is required"]}
-                            label="Please enter terms to search"
-                            validators={["required", "minStringLength: 4", "maxStringLength: 9"]}
-                            size="small"
-                            sx={{  mb:0  }}
-                        />
-                    </FormControl>
-
-                    <Box sx={{ width: "2%" }} >
-                        <H3>IN</H3>
-                    </Box>
-
-                    <FormControl size="small" sx={{ width: "17%" }}>
-                        <Select
-                            fullWidth
-                            label="Metadata"
-                            name="metadata"
-                            errorMessages={["this field is required"]}
-                            sx={{ width: "200px" }}
-                        >
-                            <option value="a">All metadata</option>
-                            <option value="b">Title</option>
-                            <option value="c">Abstract</option>
-                        </Select>
-                    </FormControl>
-
-                    <Button color="secondary" variant="contained" type="submit" size="small" >
-                        <Icon>remove</Icon>
-                    </Button>
-
-                    <Button color="primary" variant="contained" type="submit" size="small" >
-                        <Icon>add</Icon>
-                    </Button>
-
-                </Stack>
-
-                <Stack direction="row"  sx={{ justifyContent: "flex-start", alignItems: "center", width: "100%", my: 2 , gap: 2}}>
-                    <Button color="secondary" variant="contained" type="submit" size="small" >
+                    <Button color="secondary" variant="contained" size="small" onClick={() => {
+                        setGroups([{ id: 1, terms: '', metadata: 'All metadata', operator: 'AND' }, { id: 2, terms: '', metadata: 'All metadata', operator: 'AND' }, { id: 3, terms: '', metadata: 'All metadata', operator: 'AND' }])
+                    }}>
                         Reset all
                     </Button>
                     <Button color="primary" variant="contained" type="submit" size="small" >
@@ -216,11 +176,31 @@ export default function SearchMethods() {
 
                 <Grid container spacing={6}>
                     <Grid item lg={12} md={12} sm={12} xs={12} sx={{ mt: 2 }}>
-                        <ListItems items={["Terms 1", "Terms 2", "Terms 3", "Terms 4", "Terms 5", "Terms 6", "Terms 7", "Terms 8", "Terms 9", "Terms 10"]} />
+                        <ListItems items={groupsStore} url={`${REACT_APP_CLOUD_GATEWAY}${REACT_APP_MICRO_REVIEW}/projects/${id}/search-strings`} setItems={setGroupsStore} setIsLoading={setIsLoading} setOpen={setOpen} setMessage={setMessage} setSeverity={setSeverity} />
                     </Grid>
                 </Grid>
 
             </ValidatorForm>
+
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={isLoading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+
+            <ContentRoot>
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    ContentProps={{ "aria-describedby": "message-id" }}
+                >
+                    <Alert onClose={handleClose} severity={severity}
+
+                        sx={{ width: '100%' }} variant="filled">
+                        {message}
+                    </Alert>
+                </Snackbar>
+            </ContentRoot>
         </div>
     )
 }

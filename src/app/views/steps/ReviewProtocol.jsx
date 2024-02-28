@@ -74,8 +74,7 @@ export default function ReviewProtocol() {
                     <Tab label="Search String" {...a11yProps(0)} />
                     <Tab label="Source list" {...a11yProps(1)} />
                     <Tab label="Selection criteria" {...a11yProps(2)} />
-                    <Tab label="Selection procedures" {...a11yProps(3)} />
-                    <Tab label="Quality criteria" {...a11yProps(4)} />
+                    <Tab label="Quality criteria" {...a11yProps(3)} />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
@@ -88,10 +87,6 @@ export default function ReviewProtocol() {
                 <SelectionCriteria />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={3}>
-                <SelectionProcedures />
-            </CustomTabPanel>
-
-            <CustomTabPanel value={value} index={4}>
                 <QualityCriteria />
             </CustomTabPanel>
         </Box>

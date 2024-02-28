@@ -76,13 +76,13 @@ const Layout1Topbar = () => {
         <Box display="flex">
 
           <Link to="/dashboard/app">
-            <Button variant="a" color="secondary" size="small">
+            <Button variant="a" color="primary" size="small">
               Dashboard
             </Button>
           </Link>
 
           <Link to="/repositories">
-            <Button variant="a" color="secondary" size="small">
+            <Button variant="a" color="primary" size="small">
               Repositories
             </Button>
           </Link>
@@ -90,7 +90,7 @@ const Layout1Topbar = () => {
         </Box>
 
         <Box display="flex" alignItems="center">
-          <MatxSearchBox />
+
 
           <MatxMenu
             menuButton={
@@ -112,7 +112,7 @@ const Layout1Topbar = () => {
               </Link>
             </StyledItem>
 
-            <StyledItem onClick={() => { localStorage.clear(); navigate('/sign-in'); }}>
+            <StyledItem onClick={() => { localStorage.clear(); navigate('/'); }}>
               <Icon> power_settings_new </Icon>
               <Span> Logout </Span>
             </StyledItem>

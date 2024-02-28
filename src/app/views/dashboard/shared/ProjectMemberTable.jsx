@@ -95,7 +95,7 @@ const ProjectMemberTable = () => {
                   </Box>
                 </TableCell>
 
-                <TableCell align="left" colSpan={2} sx={{ px: 0, textTransform: 'capitalize' }}>
+                <TableCell align="left" colSpan={2} sx={{ px: 0, textTransform: '' }}>
                   {product.email}
                 </TableCell>
 
@@ -103,7 +103,7 @@ const ProjectMemberTable = () => {
                   {
                       product.status === 'INVITED' ? (
                     <Small bgcolor={bgSecondary}>{product.status}</Small>
-                  ) : product.status === 'ACCEPTED' ? (
+                  ) : product.status === 'ACTIVE' ? (
                     <Small bgcolor={bgPrimary}>{product.status}</Small>
                   ) : (
                     <Small bgcolor={bgError}>{product.status}</Small>
@@ -128,34 +128,11 @@ const ProjectMemberTable = () => {
 const collaboratorList = [
   {
 
-    name: 'John Doe',
-    email: 'test@abc.com',
-    status: 'ABANDONED'
+    name: 'Jesus Agudo',
+    email: 'jagudo2514@gmail.com',
+    status: 'ACTIVE',
   },
-  {
-
-    name: 'Abdel Halim',
-    email: 'test@abc.com',
-    status: 'ACCEPTED'
-  },
-  {
-
-    name: 'Omar',
-    email: 'test@abc.com',
-    status: 'INVITED'
-  },
-  {
-
-    name: 'Erick',
-    email: 'test@abc.com',
-    status: 'DECLINED'
-  },
-  {
-
-    name: 'Micheal',
-    email: 'test@abc.com',
-    status: 'INVITED'
-  },
+ 
 ];
 
 export default ProjectMemberTable;

@@ -11,6 +11,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TablePagination,
   TableRow,
   useTheme,
 } from '@mui/material';
@@ -64,10 +65,9 @@ const TopSellingTable = () => {
   return (
     <Card elevation={3} sx={{ pt: '20px', mb: 3 }}>
       <CardHeader>
-        <Title>Last activities</Title>
+        <Title>List of literatures</Title>
         <Select size="small" defaultValue="this_month">
-          <MenuItem value="this_month">This Month</MenuItem>
-          <MenuItem value="last_month">Last Month</MenuItem>
+          <MenuItem value="this_month">No filter</MenuItem>
         </Select>
       </CardHeader>
 
@@ -76,13 +76,13 @@ const TopSellingTable = () => {
           <TableHead>
             <TableRow>
               <TableCell sx={{ px: 3 }} colSpan={4}>
-                Name
+                Title
               </TableCell>
-              <TableCell sx={{ px: 0 }} colSpan={2}>
-                Revenue
+              <TableCell sx={{ px: 0 }} colSpan={3}>
+                Authors
               </TableCell>
-              <TableCell sx={{ px: 0 }} colSpan={2}>
-                Stock Status
+              <TableCell sx={{ px: 0 }} >
+                status
               </TableCell>
               <TableCell sx={{ px: 0 }} colSpan={1}>
                 Action
@@ -94,26 +94,17 @@ const TopSellingTable = () => {
             {productList.map((product, index) => (
               <TableRow key={index} hover>
                 <TableCell colSpan={4} align="left" sx={{ px: 0, textTransform: 'capitalize' }}>
-                  <Box display="flex" alignItems="center">
-                    <Avatar src={product.imgUrl} />
-                    <Paragraph sx={{ m: 0, ml: 4 }}>{product.name}</Paragraph>
-                  </Box>
+                  <Paragraph sx={{ m: 0, ml: 1 }}>{product.name}</Paragraph>
                 </TableCell>
 
-                <TableCell align="left" colSpan={2} sx={{ px: 0, textTransform: 'capitalize' }}>
-                  ${product.price > 999 ? (product.price / 1000).toFixed(1) + 'k' : product.price}
+                <TableCell align="left" colSpan={3} sx={{ px: 0, textTransform: 'capitalize' }}>
+                  <Paragraph sx={{ m: 0, ml: 1 }}>{product.author}</Paragraph>
                 </TableCell>
 
-                <TableCell sx={{ px: 0 }} align="left" colSpan={2}>
-                  {product.available ? (
-                    product.available < 20 ? (
-                      <Small bgcolor={bgSecondary}>{product.available} available</Small>
-                    ) : (
-                      <Small bgcolor={bgPrimary}>in stock</Small>
-                    )
-                  ) : (
-                    <Small bgcolor={bgError}>out of stock</Small>
-                  )}
+                <TableCell sx={{ px: 0 }} align="left">
+                  <Small bgcolor={product.status === 'Extracted data' ? bgPrimary : bgError}>
+                    {product.status}
+                  </Small>
                 </TableCell>
 
                 <TableCell sx={{ px: 0 }} colSpan={1}>
@@ -125,6 +116,15 @@ const TopSellingTable = () => {
             ))}
           </TableBody>
         </ProductTable>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={productList.length}
+          rowsPerPage={5}
+          page={0}
+          onPageChange={() => null}
+          onRowsPerPageChange={() => null}
+        />
       </Box>
     </Card>
   );
@@ -132,35 +132,72 @@ const TopSellingTable = () => {
 
 const productList = [
   {
-    imgUrl: '/assets/images/products/headphone-2.jpg',
-    name: 'earphone',
-    price: 100,
-    available: 15,
+    name: "Machine Learning in the Diagnosis of Gastric Cancer and Pulmonary Nodule Workup",
+    author: "Dr. Vamsidhar Velcheti., Dr. Shiraj Sen",
+    status: "Extracted data",
   },
   {
-    imgUrl: '/assets/images/products/headphone-3.jpg',
-    name: 'earphone',
-    price: 1500,
-    available: 30,
+    name: "Artificial Intelligence and Machine Learning",
+    author: "Vinaytosh Mishra, Fahmida Jafri, Nafeesa Abdul Kareem, Raseena Aboobacker, Fatma Noora",
+    status: "Extracted data",
   },
   {
-    imgUrl: '/assets/images/products/iphone-2.jpg',
-    name: 'iPhone x',
-    price: 1900,
-    available: 35,
+    name: "Use of Artificial Intelligence-Machine Learning to Improve Team Efficiency in the Arthroplasty Operating Room: A Benchmark-Based Model",
+    author: "Dr Richard Gold.",
+    status: "Extracted data",
   },
   {
-    imgUrl: '/assets/images/products/iphone-1.jpg',
-    name: 'iPhone x',
-    price: 100,
-    available: 0,
+    name: "Faculty Opinions recommendation of Use of machine learning to shorten observation-based screening and diagnosis of autism.",
+    author: "D P Wall, J Kosmicki, T F DeLuca, E Harstad & V A Fusaro ",
+    status: "Extracted data",
   },
   {
-    imgUrl: '/assets/images/products/headphone-3.jpg',
-    name: 'Head phone',
-    price: 1190,
-    available: 5,
+    name: "Faculty Opinions recommendation of Probabilistic machine learning and artificial intelligence.",
+    author: "Zoubin Ghahramani",
+    status: "Extracted data",
   },
+  {
+    name: "Faculty Opinions recommendation of Artificial intelligence and machine learning in anesthesiology.",
+    author: "Christopher W. Connor, M.D., Ph.D.",
+    status: "Extracted data",
+  },
+  {
+    "name": "Deep Learning and Artificial Intelligence in Healthcare",
+    "author": "Pooyan Kazemian",
+    "status": "Extracted data"
+  },
+  {
+    "name": "A risky clinical trial design, and attacks on machine learning",
+    "author": "SARAH CRESPI, JOEL GOLDBERG, CHARLES PILLER",
+    "status": "Extracted data"
+  },
+  {
+    "name": "Use of AI/Machine Learning Tools to Predict Outcome",
+    "author": "Mr Ajay Malviya, Mr Justin Green",
+    "status": "Extracted data"
+  },
+  {
+    "name": "Tweetorial: Artificial Intelligence System Approaching Neuroradiologist-level Differential Diagnosis Accuracy at Brain MRI",
+    "author": "Peter Li",
+    "status": "Extracted data"
+  },
+  {
+    "name": "Using stool samples in the diagnosis of mitochondrial disease",
+    "author": "Dr Charlotte Warren",
+    "status": "Extracted data"
+  },
+  {
+    "name": "Why Operationalizing Machine Learning Requires a Shrewd Business Perspective",
+    "author": "Eric Siegel",
+    "status": "Extracted data"
+  },
+
+  {
+    "name": "Implementation of an artificial intelligence module on the online imaging portal MYO-Share for guiding the diagnosis of muscle diseases",
+    "author": "Prof Jordi Diaz Manera",
+    "status": "Extracted data"
+  },
+
 ];
 
 export default TopSellingTable;

@@ -3,7 +3,7 @@ import { Small } from 'app/theme/Typography';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
-  flexWrap: 'wrap',
+  flexWrap: 'nowrap',
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '24px !important',
@@ -28,11 +28,11 @@ const Heading = styled('h6')(({ theme }) => ({
 
 const StatCards = () => {
   const cardList = [
-    { name: 'New Leads', amount: 3050, icon: 'group' },
-    { name: 'This week Sales', amount: '$80,500', icon: 'attach_money' },
-    { name: 'Inventory Status', amount: '8.5% Stock Surplus', icon: 'store' },
-    { name: 'Orders to deliver', amount: '305 Orders', icon: 'shopping_cart' },
-    { name: 'Orders to deliver', amount: '305 Orders', icon: 'shopping_cart' },
+    { name: 'Software Engineering', amount: 'An SLR-tool: search process in practice: a tool to conduct and manage systematic literature review (SLR)', keywords: 'SLR, SLR-tool, search process, systematic literature review', icon: 'group' },
+    { name: 'Software Engineering', amount: 'Identification and prioritization of SLR search tool requirements: an SLR and a survey', keywords: 'SLR, identification, prioritization, search tool, requirements', icon: 'group' },
+    { name: 'Cleaner Production', amount: 'Carbon accounting: a systematic literature review', keywords: 'Carbon accounting, systematic literature review', icon: 'group' },
+    { name: 'System and Software', amount: 'Software ecosystems – A systematic literature review', keywords: 'Software ecosystems, systematic literature review', icon: 'group' },
+    { name: 'Software Engineering', amount: 'A Systematic Literature Review of Software Defect Prediction:Research Trends, Datasets, Methods and Frameworks', keywords: 'Software Defect Prediction, Research Trends, Datasets, Methods, Frameworks', icon: 'group' },
   ];
 
   return (
@@ -41,23 +41,17 @@ const StatCards = () => {
         <Grid item xs={8} md={12} key={index}>
           <StyledCard elevation={6}>
             <ContentBox>
-              <Icon className="icon" style={{  opacity: 0.6, fontSize: '44px', color: '#1976d2' }}> {item.icon}</Icon>
-              <Box ml="12px">
+
+              <Box >
                 <Heading>{item.amount}</Heading>
                 <Small>{item.name}</Small>
                 <Box mt="4px" display="flex" alignItems="center" gap="5px">
                   <Box display="flex" alignItems="center" gap="5px">
-                    <span style={{  borderRadius: '100%', width: '10px', height: '10px', backgroundColor: '#1976d2', display: 'inline-block', marginRight: '4px' }}></span>
+                    <span style={{ borderRadius: '100%', width: '10px', height: '10px', backgroundColor: '#1976d2', display: 'inline-block', marginRight: '4px' }}></span>
                     <Typography variant="caption" component="span" color="text.secondary">
-                      Category 1
+                      {item.keywords}
                     </Typography>
                   </Box>
-                  <Box display="flex" alignItems="center" gap="5px">
-                    <Icon className="icon" style={{  opacity: 0.6, fontSize: '18px', color: '#1976d2' }}> star</Icon>
-                    <Typography variant="caption" component="span" color="text.secondary">
-                      23.4k
-                    </Typography>
-                    </Box>
                 </Box>
               </Box>
             </ContentBox>

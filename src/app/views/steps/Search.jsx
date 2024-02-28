@@ -71,33 +71,11 @@ export default function Search() {
             </Box>
 
             <Stack spacing={3}>
-                <Box sx={{ width: '100%' }}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <Tabs value={value} onChange={handleChange} aria-label="General Tabs" >
-                            <Tab label="Manually" {...a11yProps(0)} />
-                            <Tab label="Import Bibtex" {...a11yProps(1)} />
-                            <Tab label="Automatic" {...a11yProps(2)} />
-                        </Tabs>
-                    </Box>
-                    <CustomTabPanel value={value} index={0}>
-                        <Manually />
-                    </CustomTabPanel>
-                    <CustomTabPanel value={value} index={1}>
-                        <Bibtext />
-                    </CustomTabPanel>
-                    <CustomTabPanel value={value} index={2}>
-                        <Automatic />
-                    </CustomTabPanel>
-                </Box>
+            <Automatic />
 
             </Stack>
 
-            <Divider />
-
-            <Stack spacing={3} sx={{ my: 3 }}>
-                <H5 >Statistics for the search</H5>
-                <StatResearchCards cardList={[{ name: 'Total', amount:'0', icon: 'list'},{ name: 'Excluded', amount: '0', icon: 'cancel' } ,{ name: 'Duplicate', amount: '0', icon: 'file_copy' }]} />
-            </Stack>
+            <Divider sx={{ my: 3 }} />
 
             <Stack spacing={3}>
                 <Grid spacing={3}>

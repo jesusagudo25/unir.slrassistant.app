@@ -57,7 +57,7 @@ const Sidenav = ({ children }) => {
 
       const navigationsData = [];
        navigationsData.push( { name: 'New Project', icon: 'book', path: '/projects/new' },
-       { label: 'Projects', type: 'label' });
+       { label: 'Personal projects', type: 'label' });
 
         res.data.forEach((element) => {
           navigationsData.push({
@@ -75,6 +75,14 @@ const Sidenav = ({ children }) => {
           });
         }
 
+        navigationsData.push( { label: 'Collaborative Projects', type: 'label' });
+
+        navigationsData.push({
+          name: 'No projects',
+          icon: 'circle',
+          path: '#'
+        });
+
         navigationsData.push(  { label: 'Support', type: 'label' },
         {
           name: 'Documentation',
@@ -82,6 +90,8 @@ const Sidenav = ({ children }) => {
           type: 'extLink',
           path: ''
         } );
+
+
 
         setNavigations(navigationsData);
 

@@ -149,7 +149,7 @@ const MatxVerticalNav = ({ items }) => {
                   </Fragment>
                 )}
                 <StyledText mode={mode} className="sidenavHoverShow" sx={{ textAlign: 'left' }}>
-                  {item.name}
+                  {item.name.length > 20 ? item.name.substring(0, 20) + '...' : item.name}
                 </StyledText>
 
                 <Box mx="auto" />

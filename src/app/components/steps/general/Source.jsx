@@ -5,6 +5,8 @@ import {
     Grid,
     Icon,
 
+    MenuItem,
+
     styled,
 } from "@mui/material";
 import { H5, Span } from 'app/theme/Typography';
@@ -58,10 +60,13 @@ export default function Source() {
                             sx={{ mb: 2 }}
                             size="small"
                         >
-                            <option value="a">Google Scholar</option>
-                            <option value="b">IEEE Xplore</option>
-                            <option value="c">Science Direct</option>
-                            <option value="d">Springer</option>
+                            <MenuItem value="a">Google Scholar</MenuItem>
+                            <MenuItem value="b">IEEE Xplore</MenuItem>
+                            <MenuItem value="c">Science Direct</MenuItem>
+                            <MenuItem value="d">Springer</MenuItem>
+                            <MenuItem value="e">Scopus</MenuItem>
+                            <MenuItem value="f">Web of Science</MenuItem>
+
                         </SelectValidator>
                     </Grid>
                     <Grid item lg={2} md={2} sm={2} xs={2} sx={{ mt: 2 }} alignItems="flex-end">
@@ -75,7 +80,7 @@ export default function Source() {
 
                 <Grid container spacing={6}>
                     <Grid item lg={12} md={12} sm={12} xs={12} sx={{ mt: 2 }}>
-                        <ListItems items={["Source 1", "Source 2", "Source 3"]} />
+                        <ListItems items={[{ id: 1, description: "Google Scholar" }, { id: 2, description: "IEEE Xplore" }, { id: 3, description: "Science Direct" }, { id: 4, description: "Springer" }, { id: 5, description: "Scopus" }, { id: 6, description: "Web of Science" }]} />
                     </Grid>
                 </Grid>
 

@@ -7,6 +7,7 @@ import {
     Box,
     styled,
     FormControl,
+    MenuItem,
 } from "@mui/material";
 import { H5, Span } from 'app/theme/Typography';
 import { useEffect, useState } from "react";
@@ -72,8 +73,8 @@ export default function SelectionCriteria() {
                                 errorMessages={["this field is required"]}
                                 size="small"
                             >
-                                <option value="a">Inclusion</option>
-                                <option value="b">Exclusion</option>
+                                <MenuItem value="a">Inclusion</MenuItem>
+                                <MenuItem value="b">Exclusion</MenuItem>
                             </SelectValidator>
                         </FormControl>
 
@@ -91,7 +92,12 @@ export default function SelectionCriteria() {
 
                         <Grid container spacing={6}>
                             <Grid item lg={12} md={12} sm={12} xs={12} sx={{ mt: 2 }}>
-                                <ListItems items={["Question 1", "Question 2", "Question 3"]} />
+                                <ListItems items={[
+                                    { id: 1, description: "Study type: primary studies investigating the use of artificial intelligence in medical diagnosis, such as clinical trials, observational studies, systematic reviews, and meta-analyses will be included"}, 
+                                    { id: 1, description: "Population: Studies involving patients of all ages and genders, diagnosed with a variety of medical conditions."}, 
+                                    { id: 1, description: "Intervention: Studies investigating the use of artificial intelligence, machine learning or deep learning algorithms for diagnosis, prognosis or disease detection."},  
+                                    { id: 1, description: "Outcome: Studies reporting diagnostic accuracy, sensitivity, specificity, or other relevant outcomes related to the use of artificial intelligence in medical diagnosis will be included."}
+                                ]}/>
                             </Grid>
                         </Grid>
 
@@ -102,7 +108,11 @@ export default function SelectionCriteria() {
                         <Divider sx={{ mb: 2 }} />
                         <Grid container spacing={6}>
                             <Grid item lg={12} md={12} sm={12} xs={12} sx={{ mt: 2 }}>
-                                <ListItems items={["Question 1", "Question 2", "Question 3"]} />
+                                <ListItems items={[{ id: 1, description: "Study Type: Non-primary studies, such as commentaries, editorials, letters to the editor, and studies that are not available in full text will be excluded." },
+                                { id: 1, description: "Population: Studies that focus exclusively on pediatric or geriatric populations may be excluded if they are not relevant to the scope of the review." },
+                                { id: 1, description: "Intervention: Studies that do not specifically investigate the use of artificial intelligence in medical diagnosis will be excluded." },
+                                { id: 1, description: "Outcome: Studies that do not report outcomes relevant to the diagnostic accuracy or clinical utility of artificial intelligence in medical diagnosis will be excluded." }
+                                ]} />
                             </Grid>
                         </Grid>
                     </Box>
