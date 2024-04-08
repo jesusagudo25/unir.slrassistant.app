@@ -58,7 +58,7 @@ function AppAppBar() {
               href="#"
               sx={rightLink}
             >
-              {'Get Involved'}
+              {'Contribute'}
             </Link>
             <Link
               color="inherit"

@@ -11,6 +11,10 @@ const item = {
   alignItems: 'center',
   px: 5,
 };
+/* 
+SLR-TOOL: SYSTEMATIC LITERATURE REVIEW TOOL
+
+*/
 
 function ProductValues() {
   return (
@@ -25,63 +29,70 @@ function ProductValues() {
           alt="curvy lines"
           sx={{ pointerEvents: 'none', position: 'absolute', top: -180 }}
         />
-        <Grid container spacing={5}>
-          <Grid item xs={12} md={4}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={3}>
             <Box sx={item}>
               <Box
                 component="img"
-                src="/assets/images/landing-page/productValues1.svg"
+                src="/assets/images/landing-page/search.svg"
                 alt="suitcase"
                 sx={{ height: 55 }}
               />
               <Typography variant="h6" sx={{ my: 5 }}>
-                The best luxury hotels
+                Automated searches
               </Typography>
               <Typography variant="h5">
                 {
-                  'From the latest trendy boutique hotel to the iconic palace with XXL pool'
-                }
-
-                {
-                  ', go for a mini-vacation just a few subway stops away from your home.'
+                  'Search for articles from multiple sources with a single click.'
                 }
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3}>
             <Box sx={item}>
               <Box
                 component="img"
-                src="/assets/images/landing-page/productValues2.svg"
+                src="/assets/images/landing-page/group.svg"
                 alt="graph"
                 sx={{ height: 55 }}
               />
               <Typography variant="h6" sx={{ my: 5 }}>
-                New experiences
+                Collaboration
               </Typography>
               <Typography variant="h5">
-                {
-                  'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '
-                }
-
-                {'your Sundays will not be alike.'}
+                {'Collaborate with your team to conduct SLR.'}
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3}>
             <Box sx={item}>
               <Box
                 component="img"
-                src="/assets/images/landing-page/productValues3.svg"
+                src="/assets/images/landing-page/trace.svg"
                 alt="clock"
                 sx={{ height: 55 }}
               />
               <Typography variant="h6" sx={{ my: 5 }}>
-                Exclusive rates
+                Traceability
               </Typography>
               <Typography variant="h5">
-                {'By registering, you will access specially negotiated rates '}
-                {'that you will not find anywhere else.'}
+                {'Trace the SLR process from start to finish.'}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Box sx={item}>
+              <Box
+                component="img"
+                src="/assets/images/landing-page/report.svg"
+                alt="clock"
+                sx={{ height: 55 }}
+              />
+              <Typography variant="h6" sx={{ my: 5 }}>
+                Report generation
+              </Typography>
+              <Typography variant="h5">
+                {'Automated report generation for SLR process.'}
               </Typography>
             </Box>
           </Grid>

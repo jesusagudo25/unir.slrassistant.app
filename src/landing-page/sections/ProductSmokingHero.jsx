@@ -28,7 +28,7 @@ function ProductSmokingHero() {
       </Typography>
       <Box
         component="img"
-        src="/assets/images/landing-page/productBuoy.svg"
+        src="/assets/images/landing-page/help.svg"
         alt="buoy"
         sx={{ width: 60 }}
       />

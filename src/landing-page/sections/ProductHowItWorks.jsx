@@ -25,6 +25,12 @@ const image = {
   my: 4,
 };
 
+/* 
+SLR-TOOL: SYSTEMATIC LITERATURE REVIEW TOOL
+
+*/
+
+
 function ProductHowItWorks() {
   return (
     <Box
@@ -53,51 +59,63 @@ function ProductHowItWorks() {
           }}
         />
         <Typography variant="h4" marked="center" component="h2" sx={{ mb: 14 }}>
-          How it works
+          Contribute 
         </Typography>
         <div>
-          <Grid container spacing={5}>
-            <Grid item xs={12} md={4}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={3}>
               <Box sx={item}>
                 <Box sx={number}>1.</Box>
                 <Box
                   component="img"
-                  src="/assets/images/landing-page/productHowItWorks1.svg"
+                  src="/assets/images/landing-page/repo.svg"
                   alt="suitcase"
                   sx={image}
                 />
                 <Typography variant="h5" align="center">
-                  Appointment every Wednesday 9am.
+                Visit our repository on GitHub.
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={3}>
               <Box sx={item}>
                 <Box sx={number}>2.</Box>
                 <Box
                   component="img"
-                  src="/assets/images/landing-page/productHowItWorks2.svg"
+                  src="/assets/images/landing-page/fork.svg"
                   alt="graph"
                   sx={image}
                 />
                 <Typography variant="h5" align="center">
-                  First come, first served. Our offers are in limited quantities, so
-                  be quick.
+                  Fork the project to your GitHub account.
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={3}>
               <Box sx={item}>
                 <Box sx={number}>3.</Box>
                 <Box
                   component="img"
-                  src="/assets/images/landing-page/productHowItWorks3.svg"
+                  src="/assets/images/landing-page/changes.svg"
                   alt="clock"
                   sx={image}
                 />
                 <Typography variant="h5" align="center">
-                  {'New offers every week. New experiences, new surprises. '}
-                  {'Your Sundays will no longer be alike.'}
+                  Make the neccessary changes in a new branch.
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Box sx={item}>
+                <Box sx={number}>4.</Box>
+                <Box
+                  component="img"
+                  src="/assets/images/landing-page/pull.svg"
+                  alt="clock"
+                  sx={image}
+                />
+                <Typography variant="h5" align="center">
+                  Send a pull request for us to review your changes.
                 </Typography>
               </Box>
             </Grid>
